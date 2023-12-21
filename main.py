@@ -115,6 +115,9 @@ def skus():
 # Initialize Cart Service
 cart_service = CartService(redis_conn)
 
+# Initialize User Service - for carts life quality improvement by Gabs
+user_service = UserService(redis_conn)
+
 
 @app.route('/add_to_cart')
 def add_to_cart_form():
@@ -141,12 +144,15 @@ def add_to_cart():
 @app.route('/view_cart/<user_id>')
 def view_cart(user_id):
     cart = cart_service.get_cart(user_id)
-    return render_template('view_cart.html', cart=cart, user_id=user_id)
+    # cart_details = cart_service.get_cart_details(user_id)
+    return render_template('view_cart.html', cart=cart)
 
 
 @app.route('/view_carts')
 def view_carts():
     all_carts = cart_service.get_all_carts()
+    logging.info("ALL CARTS: {}".format(all_carts))
+
     return render_template('view_carts.html', all_carts=all_carts)
 
 

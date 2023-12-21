@@ -41,3 +41,20 @@ class UserService:
                 user_data.get(b'country', b'').decode()
             ))
         return users
+
+    def get_all_user_ids(self):
+        user_keys = self.redis_conn.keys('user:*')
+        user_ids = [key.decode().split(':')[1] for key in user_keys]
+        return user_ids
+
+    def get_user(self, user_id):
+        user_key = f"user:{user_id}"
+        user_data = self.redis_conn.hgetall(user_key)
+        if user_data:
+            return {
+                'user_id': user_id,
+                'username': user_data.get(b'username', b'').decode(),
+                'email': user_data.get(b'email', b'').decode()
+                # Add other fields as necessary
+            }
+        return None

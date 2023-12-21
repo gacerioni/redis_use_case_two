@@ -1,5 +1,22 @@
 import json
+import logging
+import os
+import config
+import redis
+
 from models.cart import ShoppingCart
+from services.skuitem_service import SKUService
+from services.user_service import UserService
+
+# GABS HACK TO AVOID CIRCULAR DEPENDENCY - I PREFER FASTAPI SOMETIMES
+REDIS_HOST_OSS = os.getenv('REDIS_HOST_OSS', config.DEFAULT_REDIS_HOST_OSS)
+REDIS_PORT_OSS = os.getenv('REDIS_PORT_OSS', config.DEFAULT_REDIS_PORT_OSS)
+# Initialize Redis Connection
+redis_conn = redis.Redis(host=REDIS_HOST_OSS, port=REDIS_PORT_OSS, db=0)
+# Initialize SKU Service
+sku_service = SKUService(redis_conn)
+# Initialize User Service - for carts life quality improvement by Gabs
+user_service = UserService(redis_conn)
 
 
 class CartService:
@@ -44,4 +61,27 @@ class CartService:
                 for sku_id, quantity in items.items():
                     cart.add_item(sku_id, quantity)
                 all_carts[user_id] = cart.get_items()
+        print("ALL CARTS: {}".format(str(all_carts)))
         return all_carts
+
+    def get_cart_details(self, user_id):
+        # Fetch the cart
+        cart = self.get_cart(user_id)
+
+        user = user_service.get_user(user_id)
+
+        # Prepare cart details
+        cart_details = {
+            'user': {'id': user_id, 'username': user['username']},  # Use dictionary access
+            'items': []
+        }
+
+        for sku_id, quantity in cart.items.items():
+            sku = sku_service.get_sku(sku_id)  # Fetch SKU details
+            cart_details['items'].append({
+                'sku_id': sku_id,
+                'name': sku.name,
+                'quantity': quantity
+            })
+
+        return cart_details
