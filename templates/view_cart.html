@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Cart</title>
+</head>
+<body>
+    <h1>Shopping Cart for User {{ user_id }}</h1>
+    {% if cart.items %}
+        <table border="1">
+            <tr>
+                <th>SKU ID</th>
+                <th>Quantity</th>
+            </tr>
+            {% for sku_id, quantity in cart.items.items() %}
+                <tr>
+                    <td>{{ sku_id }}</td>
+                    <td>{{ quantity }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>The cart is empty.</p>
+    {% endif %}
+</body>
+</html>

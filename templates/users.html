@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Users List</title>
+</head>
+<body>
+    <a href="/">Back to Home</a>
+    <h1>Users</h1>
+    <table>
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Country</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.country }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

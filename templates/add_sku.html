@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add SKU</title>
+</head>
+<body>
+    <h1>Add New SKU</h1>
+    <form method="post" action="{{ url_for('add_sku') }}">
+        <label for="sku_id">SKU ID:</label><br>
+        <input type="text" id="sku_id" name="sku_id" required><br>
+
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="price">Price:</label><br>
+        <input type="text" id="price" name="price" required><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+
+        <label for="image_url">Image URL:</label><br>
+        <input type="text" id="image_url" name="image_url"><br>
+
+        <input type="submit" value="Add SKU">
+    </form>
+</body>
+</html>

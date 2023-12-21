@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SKU List</title>
+</head>
+<body>
+    <h1>SKU List</h1>
+    <table border="1">
+        <tr>
+            <th>SKU ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+        {% for sku in skus %}
+        <tr>
+            <td>{{ sku.sku_id }}</td>
+            <td>{{ sku.name }}</td>
+            <td>{{ sku.price }}</td>
+            <td>{{ sku.description }}</td>
+            <td>
+                {% if sku.image_url %}
+                    <img src="{{ sku.image_url }}" alt="SKU Image">
+                {% else %}
+                    No image
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">No SKUs found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

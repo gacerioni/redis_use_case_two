@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add to Cart</title>
+</head>
+<body>
+    <h1>Add Item to Cart</h1>
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+        <label for="user_id">Select User:</label><br>
+        <select id="user_id" name="user_id">
+            {% for user in users %}
+            <option value="{{ user.user_id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="sku_id">Select SKU:</label><br>
+        <select id="sku_id" name="sku_id">
+            {% for sku in skus %}
+            <option value="{{ sku.sku_id }}">{{ sku.name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" name="quantity" min="1" value="1" required><br>
+
+        <input type="submit" value="Add to Cart">
+    </form>
+</body>
+</html>

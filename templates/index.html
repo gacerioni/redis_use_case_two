@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redis Gabs Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Gabs Redis Challenge - Use Case Two - Shopping Cart App</h1>
+    <img src="{{ url_for('static', filename='redis.png') }}" alt="Redis Logo" class="redis-logo" />
+
+    <div>
+        <h2>Available actions to play with:</h2>
+        <ul>
+            <li><a href="/create_user">Create User</a></li>
+            <li><a href="/users">View All Users</a></li>
+        </ul>
+
+        <ul>
+            <li><a href="/add_sku">Add SKU</a></li>
+            <li><a href="/skus">View All SKUs</a></li>
+        </ul>
+
+        <ul>
+            <li><a href="/add_to_cart">Add Items SKUs to User Cart</a></li>
+            <li><a href="/view_carts">View All Carts</a></li>
+
+            <!-- GABS FAST PACED HACK for viewing a specific cart -->
+            <form action="" method="get" id="view_cart_form">
+                <label for="user_id">Enter User ID to View a Specific Cart:</label>
+                <input type="text" id="user_id" name="user_id" required>
+                <input type="submit" value="View Cart">
+            </form>
+            <script>
+                // JavaScript to handle the form submission - sorry about that lol
+                document.getElementById('view_cart_form').onsubmit = function() {
+                    var user_id = document.getElementById('user_id').value;
+                    window.location.href = '/view_cart/' + user_id;
+                    return false;
+                };
+            </script>
+
+        </ul>
+    </div>
+</body>
+</html>
